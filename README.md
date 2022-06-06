@@ -1,5 +1,5 @@
 # lab12_little
-obsługa listy i cośtam jeszcze - mikołaj
+obsługa listy i cośtam jeszcze - mikołaj \
 zabronienia - julka \
-kryteria zamykania - warunki - kamila
-struktura ogolna algorytmu - zosia
+kryteria zamykania - warunki - kamila \
+struktura ogolna algorytmu - zosia \
