@@ -40,23 +40,36 @@ def wybor_przejscia(matrix):
                         if x != i:
                             if matrix[x][j] < min_col:
                                 min_col = matrix[x][j]
-                    zera[(i, j)] = min_col + min_row
+                    zera[(i + 1, j + 1)] = min_col + min_row
     return zera
 
 
-tab = [[inf, 2, 3, 4, 1, 3, 6, 5, 6, 8],
-       [9, inf, 4, 3, 8, 3, 5, 1, 6, 3],
-       [3, 4, inf, 4, 1, 6, 7, 2, 9, 3],
-       [8, 6, 2, inf, 3, 2, 6, 4, 5, 5],
-       [7, 4, 5, 3, inf, 7, 8, 3, 4, 6],
-       [2, 3, 1, 5, 7, inf, 2, 1, 5, 4],
-       [3, 4, 2, 8, 9, 1, inf, 5, 6, 3],
-       [8, 4, 5, 6, 1, 2, 3, inf, 6, 1],
-       [7, 2, 4, 5, 3, 6, 4, 7, inf, 5],
-       [4, 1, 3, 1, 6, 3, 7, 8, 9, inf]]
-x, rows, cols = redukcja_macierzy(tab)
+# tab = [[inf, 2, 3, 4, 1, 3, 6, 5, 6, 8],
+#        [9, inf, 4, 3, 8, 3, 5, 1, 6, 3],
+#        [3, 4, inf, 4, 1, 6, 7, 2, 9, 3],
+#        [8, 6, 2, inf, 3, 2, 6, 4, 5, 5],
+#        [7, 4, 5, 3, inf, 7, 8, 3, 4, 6],
+#        [2, 3, 1, 5, 7, inf, 2, 1, 5, 4],
+#        [3, 4, 2, 8, 9, 1, inf, 5, 6, 3],
+#        [8, 4, 5, 6, 1, 2, 3, inf, 6, 1],
+#        [7, 2, 4, 5, 3, 6, 4, 7, inf, 5],
+#        [4, 1, 3, 1, 6, 3, 7, 8, 9, inf]]
+# x, rows, cols = redukcja_macierzy(tab)
+# LB = rows + cols
+# print(np.array(x))
+# print('LB jest równe ', LB)
+# zera = wybor_przejscia(x)
+# print(zera)
+
+A = [[inf, 5, 4, 6, 6],
+     [8, inf, 5, 3, 4],
+     [4, 3, inf, 3, 1],
+     [8, 2, 5, inf, 6],
+     [2, 2, 7, 0, inf]]
+x, rows, cols = redukcja_macierzy(A)
 LB = rows + cols
 print(np.array(x))
 print('LB jest równe ', LB)
 zera = wybor_przejscia(x)
 print(zera)
+
