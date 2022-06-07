@@ -40,8 +40,22 @@ def wybor_przejscia(matrix):
                         if x != i:
                             if matrix[x][j] < min_col:
                                 min_col = matrix[x][j]
-                    zera[(i + 1, j + 1)] = min_col + min_row
+                    zera[(i, j)] = min_col + min_row
     return zera
+
+
+def wybranie_kroku(matrix, zera, LB):
+    max_val = 0
+    for i in zera.keys():
+        if zera[i] > max_val:
+            candidate = i
+            max_val = zera[i]
+    LB += max_val
+    matrix[candidate[0]] = [inf for i in range(len(matrix[0]))]
+    for i in range(len(matrix)):
+        matrix[i][candidate[1]] = inf
+    print(LB)
+    return LB, matrix
 
 
 # tab = [[inf, 2, 3, 4, 1, 3, 6, 5, 6, 8],
@@ -68,8 +82,11 @@ A = [[inf, 5, 4, 6, 6],
      [2, 2, 7, 0, inf]]
 x, rows, cols = redukcja_macierzy(A)
 LB = rows + cols
-print(np.array(x))
+# print(np.array(x))
 print('LB jest równe ', LB)
 zera = wybor_przejscia(x)
 print(zera)
+LB, matrix = wybranie_kroku(x, zera, LB)
+print('LB jest równe ', LB)
+print(np.array(matrix))
 
