@@ -10,7 +10,7 @@ def redukcja_macierzy(matrix: list[list]):
     min_in_rows = np.min(matrix, axis=1)
     for i in range(len(matrix)):
         # jeśli minimalna wartość nie jest równa 0, dodaję ją do fi i odejmuję we wszystkich kolumnach
-        if min_in_rows[i] != 0:
+        if min_in_rows[i] != 0 and min_in_rows[i] != inf:
             fi_rows += min_in_rows[i]
             for j in range(len(matrix[i])):
                 matrix[i][j] -= min_in_rows[i]
@@ -18,7 +18,7 @@ def redukcja_macierzy(matrix: list[list]):
     min_in_cols = np.min(matrix, axis=0)
     for i in range(len(matrix[0])):
         # jeśli minimalna wartość nie jest równa 0, dodaję ją do fi i odejmuję we wszystkich wierszach
-        if min_in_cols[i] != 0:
+        if min_in_cols[i] != 0 and min_in_cols[i] != inf:
             fi_cols += min_in_cols[i]
             for j in range(len(matrix)):
                 matrix[j][i] -= min_in_cols[i]
@@ -50,12 +50,13 @@ def wybranie_kroku(matrix, zera, LB):
         if zera[i] > max_val:
             candidate = i
             max_val = zera[i]
-    LB += max_val
+    if max_val != inf:
+        LB += max_val
     matrix[candidate[0]] = [inf for i in range(len(matrix[0]))]
     for i in range(len(matrix)):
         matrix[i][candidate[1]] = inf
-    print(LB)
-    return LB, matrix
+    matrix[candidate[1]][candidate[0]] = inf
+    return LB, matrix, candidate
 
 
 # tab = [[inf, 2, 3, 4, 1, 3, 6, 5, 6, 8],
@@ -75,18 +76,27 @@ def wybranie_kroku(matrix, zera, LB):
 # zera = wybor_przejscia(x)
 # print(zera)
 
-A = [[inf, 5, 4, 6, 6],
-     [8, inf, 5, 3, 4],
-     [4, 3, inf, 3, 1],
-     [8, 2, 5, inf, 6],
-     [2, 2, 7, 0, inf]]
-x, rows, cols = redukcja_macierzy(A)
-LB = rows + cols
-# print(np.array(x))
-print('LB jest równe ', LB)
-zera = wybor_przejscia(x)
-print(zera)
-LB, matrix = wybranie_kroku(x, zera, LB)
-print('LB jest równe ', LB)
-print(np.array(matrix))
+results = []
+LB = 0
+matrix = [[inf, 5, 4, 6, 6],
+          [8, inf, 5, 3, 4],
+          [4, 3, inf, 3, 1],
+          [8, 2, 5, inf, 6],
+          [2, 2, 7, 0, inf]]
 
+for i in range(len(matrix[0])):
+
+    print(f"\nKROK {i+1}")
+    matrix, rows, cols = redukcja_macierzy(matrix)
+    if rows != inf:
+        LB += rows
+    if cols != inf:
+        LB += cols
+    print('LB jest równe ', LB)
+    zera = wybor_przejscia(matrix)
+    LB, matrix, candidate = wybranie_kroku(matrix, zera, LB)
+    results.append(candidate)
+    print(np.array(matrix))
+
+
+print('\nwyniki:', results)
