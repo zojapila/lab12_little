@@ -60,13 +60,14 @@ def wybranie_kroku(matrix, zera, LB):
     if max_val != inf:
         LB += max_val
     matrix[candidate[0]] = [inf for i in range(len(matrix[0]))]
+    # Wykreślamy odpowiedni rząd i kolumnę zmieniając wartości w nich na inf
     for i in range(len(matrix)):
         matrix[i][candidate[1]] = inf
     matrix[candidate[1]][candidate[0]] = inf
     return LB, matrix, candidate
 
 # Funkcja reazlizująca kolejne podproblemy po redukcji macierzy
-def podproblem(matrix, LB, candidate):
+def right_branch(matrix, LB, candidate):
     # Daną macierz kopiujemy, odznaczamy kolejny element (oznaczamy
     # jako inf), po czym wykonujemy redukcję, z któej otrzymane
     # wartości dodajemy do LB
@@ -99,7 +100,7 @@ if __name__ == '__main__':
         zera = wybor_przejscia(matrix)
         LB_pom = LB
         LB, matrix, candidate = wybranie_kroku(matrix, zera, LB)
-        LB2, matrix2 = podproblem(matrix, LB_pom, candidate)
+        LB2, matrix2 = right_branch(matrix, LB_pom, candidate)
         print("wartość lb podproblemu:", LB)
         results[candidate[0]] = (candidate[0] + 1, candidate[1] + 1)
         print(np.array(matrix))
